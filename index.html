@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Excel Comparator</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+<main>
+  <h1>Excel File Comparator</h1>
+  <p class="sub">Load two files, pick the sheets, then run the comparison. Everything stays in your browser.</p>
+
+  <div class="files">
+    <section class="drop" id="dropA">
+      <h2>File A (original)</h2>
+      <input type="file" id="fileA" accept=".xlsx,.xls,.xlsm,.csv">
+      <label class="pick" for="fileA">Choose a file</label>
+      <p class="fname" id="nameA">Or drop it here</p>
+      <select id="sheetA" aria-label="Sheet of file A" hidden></select>
+    </section>
+    <section class="drop" id="dropB">
+      <h2>File B (modified)</h2>
+      <input type="file" id="fileB" accept=".xlsx,.xls,.xlsm,.csv">
+      <label class="pick" for="fileB">Choose a file</label>
+      <p class="fname" id="nameB">Or drop it here</p>
+      <select id="sheetB" aria-label="Sheet of file B" hidden></select>
+    </section>
+  </div>
+
+  <div class="opts">
+    <div>
+      <label for="mode">Row matching</label>
+      <select id="mode">
+        <option value="pos">By position (row 1 with row 1…)</option>
+        <option value="key">By key column (identifier)</option>
+      </select>
+    </div>
+    <div id="keyWrap" hidden>
+      <label for="key">Key column</label>
+      <select id="key"></select>
+    </div>
+    <div class="chk"><input type="checkbox" id="trim" checked><label for="trim">Ignore leading/trailing spaces</label></div>
+    <div class="chk"><input type="checkbox" id="icase"><label for="icase">Ignore case</label></div>
+    <button class="go" id="run" disabled>Compare</button>
+  </div>
+  <p id="msg" role="alert"></p>
+
+  <section id="result" hidden>
+    <h2 class="sec" id="total"></h2>
+    <div id="detailWrap">
+      <h3 class="sec">Number of changes per column</h3>
+      <div class="scroll short"><table id="colTbl"></table></div>
+      <h3 class="sec">Modified cells (row, column, values)</h3>
+      <div class="scroll short"><table id="detTbl"></table></div>
+    </div>
+  </section>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
